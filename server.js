@@ -71,10 +71,57 @@ app.post('/add/Comment', (request, response) => {
 
 app.post('/add/scrape', (request, response) => {
     console.log('scrape request', request.body);
+    let numberFound = 0;  //count for number of Articles found
+    let numberAdded = 0; // count for number of Articles added
+    let numberRejected = 0; // conunt for the number of Articles not added
+    // The three of these numbers had better add up, chump.
+
     // start the scraper
-    // insert the articles
-    // return the new articles
-    response.send('UNDER CONSTRUCTION');
+    const link = request.body.link;
+    console.log('link', link);
+    axios.get(link)
+      .then( extResponse => {
+        const $ = cheerio.load(extResponse.data);
+
+        // specific search on external page using cheerio
+        // Use Postman to make this easier
+        // test case:
+        // link: 'https://https://www.angrymetalguy.com/category/reviews/'
+        // each <article>
+        $('article h4').each( function(i, element) {
+// !! IMPORTANT !!
+// Above is an example where an ES6 arrow function produces problems with accessing `this`
+// !! IMPORTANT !!
+          let result = {}; // the data that is added to db  
+          // the title and link is in the <h4> with class entry-title
+          result.title = $(this)
+            .children('a')
+            .text();
+          result.link = $(this)
+            .children('a')
+            .attr('href');
+
+          numberFound++; // increase the number of articles found
+          // add article to the DB
+          // console.log('result:', result.title);
+          db.Article.create(result)
+            .then( dbArticle => {
+              // article successfully added to db
+              console.log ('added', dbArticle._id)
+              numberAdded++; // increse number of articles added
+            })
+            .catch( error => {
+              console.log('error - possibly just a duplicate');
+              // console.log( error )
+              numberRejected++;  // increase the number of articles rejected
+            });
+        }); 
+      })
+      .catch( err => {
+        console.log(err);
+      });
+
+    response.send('Scrape complete');
 })
 
 // Connect to the Mongo DB using mongoose

@@ -27,3 +27,11 @@ The news-forum app scrapes a website for news articles and provides a strcuture 
     * successfully adds multiple comments to DB (with identical information, the test case), but appears to return the same ID to cient
     * does not permit duplicate Article title to DB, returns error to client
     * click for scraping is correctly calling back from server at /add/scrape... but doing nothing
+* [jd-2019-08-25] Added basic scraping functionality on test website
+    * `/add/scrape` route scrapes `<article>` tags to get `title` and `link` to article
+    * uses cheerio to parse the remote HTML (this is generally site specific, so I used postman to review the remote HTML structure)
+    * server properly added to database.  Relying on model restrictions, no duplicates are allowed, though errors are thrown
+
+#### See Also
+See the [current issues at github](https://github.com/jmdahle/news-forum/issues)
+See the [Codesource at github](https://github.com/jmdahle/news-forum)

@@ -1,12 +1,10 @@
 let testLink = {
-    link: 'https://https://www.angrymetalguy.com/category/reviews/'
+    link: 'https://www.angrymetalguy.com/category/reviews/'
 }
 $('#btn-scrape').on('click', e => {
     $.post({
         url:'/add/scrape',
-        data: {
-            link: testLink
-        }    
+        data: testLink
     })
         .then( (dbScrapeResult) => {
             console.log( dbScrapeResult );
