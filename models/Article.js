@@ -14,6 +14,9 @@ var ArticleSchema = new Schema( {
         required: true,
         unique: true
     },
+    summary: {
+        type: String,
+    },
     comments: [{
         // a reference to Comment; Comment is a child of Article
         // each Article has 0 or more comments

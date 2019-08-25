@@ -3,20 +3,23 @@ div {
     border: 1pt solid red;
 }
 
-#scraper-wrapper {
+#scraper-content {
     height: 200px;
     width: 800px;
     background-color: #cccccc;
+    overflow: auto;
 }
 
-#articles-wrapper {
+#articles-content {
     height: 200px;
     width: 800px;
     background-color: #dddddd;
+    overflow:auto;
 }
 
-#comments-wrapper {
+#comments-content {
     height: 200px;
     width: 800px;
     background-color: #888888;
+    overflow: auto;
 }
