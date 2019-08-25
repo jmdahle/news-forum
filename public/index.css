@@ -1,0 +1,22 @@
+div {
+    /* for testing */
+    border: 1pt solid red;
+}
+
+#scraper-wrapper {
+    height: 200px;
+    width: 800px;
+    background-color: #cccccc;
+}
+
+#articles-wrapper {
+    height: 200px;
+    width: 800px;
+    background-color: #dddddd;
+}
+
+#comments-wrapper {
+    height: 200px;
+    width: 800px;
+    background-color: #888888;
+}
