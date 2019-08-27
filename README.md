@@ -31,6 +31,11 @@ The news-forum app scrapes a website for news articles and provides a strcuture 
     * `/add/scrape` route scrapes `<article>` tags to get `title` and `link` to article
     * uses cheerio to parse the remote HTML (this is generally site specific, so I used postman to review the remote HTML structure)
     * server properly added to database.  Relying on model restrictions, no duplicates are allowed, though errors are thrown
+    * added summary to Article data
+    * added choose article with some not fully tested functionality (add comment, view comments, open link)
+    * scraper is functional
+    * list of articles is functional
+    
 
 #### See Also
 See the [current issues at github](https://github.com/jmdahle/news-forum/issues)

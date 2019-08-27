@@ -1,16 +1,11 @@
-div {
-    /* for testing */
-    border: 1pt solid red;
-}
 
-#scraper-content {
-    height: 200px;
-    width: 800px;
+#message-area {
+    border: 1pt solid red;
     background-color: #cccccc;
-    overflow: auto;
 }
 
 #articles-content {
+    border: 1pt solid red;
     height: 200px;
     width: 800px;
     background-color: #dddddd;
@@ -18,8 +13,17 @@ div {
 }
 
 #comments-content {
+    border: 1pt solid red;
     height: 200px;
     width: 800px;
     background-color: #888888;
     overflow: auto;
+}
+
+.not-selected {
+    background-color: #dddddd;
+}
+
+.selected {
+    background-color: lemonchiffon;
 }
