@@ -6,18 +6,15 @@
 
 #articles-content {
     border: 1pt solid red;
-    height: 200px;
-    width: 800px;
     background-color: #dddddd;
-    overflow:auto;
 }
 
-#comments-content {
+#comments-wrapper {
     border: 1pt solid red;
-    height: 200px;
-    width: 800px;
     background-color: #888888;
-    overflow: auto;
+    position: fixed;
+    left: 50px;
+    top: 50px;
 }
 
 .not-selected {

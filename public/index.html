@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- local page css -->
     <link rel='stylesheet' type='text/css' href='/index.css'></style>
     <!-- jquery -->
@@ -11,11 +15,24 @@
     <title>Document</title>
 </head>
 <body>
-    <!-- articles -->
-    <div id='articles-wrapper'>
-        <div id='articles-content'></div>
-        <button id='testArticle'>Get Articles</button>
+    <div class='container'>
+        <div class="row">
+            <div class="col-md-10">
+                <!-- articles -->
+                <div id='articles-wrapper'>
+                    <div id='articles-content'></div>
+                    <button id='testArticle'>Get Articles</button>
+                </div>    
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
     </div>
+    <footer>
+        <div id='message-area'></div>
+        <button id='btn-scrape'>Search for New Aricles</button>
+    </footer>
+
     <!-- comments -->
     <div id='comments-wrapper'>
         <div id='comments-content'></div>
@@ -27,11 +44,8 @@
             <input type='text' id='new-comment-commentor'>
             <button id='btn-submit-comment' type='submit' data-id=''>Post Comment</button>
         </form>
-    </div>
-    <footer>
-        <div id='message-area'></div>
-        <button id='btn-scrape'>Search for New Aricles</button>
-    </footer>
+    </div>    
+    
 
     <!-- local page js /jquery -->
     <script src='/index.js'> </script>
