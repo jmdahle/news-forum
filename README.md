@@ -5,6 +5,10 @@ The news-forum app scrapes a website for news articles and provides a strcuture 
 
 ## Installation
 
+### Bootstrap
+    * buttons
+    * grid
+    
 ### Node Module Dependencies
 1. Run `npm init` to install the dependencies listed in `json.package`. When that's finished, you will have installed these npm packages:
    1. express
@@ -35,7 +39,7 @@ The news-forum app scrapes a website for news articles and provides a strcuture 
     * added choose article with some not fully tested functionality (add comment, view comments, open link)
     * scraper is functional
     * list of articles is functional
-    
+* [jd-2019-08-26] Completed db interaction; finished initial layout
 
 #### See Also
 See the [current issues at github](https://github.com/jmdahle/news-forum/issues)

@@ -6,7 +6,7 @@ const cheerio = require('cheerio');
 
 // Initialize express
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // database models
 const db = require('./models');
@@ -145,7 +145,11 @@ app.post('/add/scrape', (request, response) => {
 
 // Connect to the Mongo DB using mongoose
 mongoose.connect('mongodb://localhost/news-forum-populator', { useNewUrlParser: true });
-
+// connect to the heroku DB ??
+// mongoose.connect('mongodb://jdahle:m3tal-n3ws@ds253537.mlab.com:53537/heroku_p7b38krt')
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+// Connect to the Mongo DB
+mongoose.connect(MONGODB_URI);
 
 // start the listener
 app.listen(PORT, () => {
