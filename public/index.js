@@ -73,18 +73,33 @@ $(document).ready( () => {
                 let listSource = dbArticles;
                 let listHtml = '';
                 listHtml += '<div>';
-                listHtml += `<ul id='articleList' data-selected-item=''>`;
+                listHtml += `<div id='articleList' data-selected-item=''>`;
                 listSource.forEach(element => {
-                    listHtml += '<li>';
-                    listHtml += `<div id='article-${element._id}' class='not-selected'>`
-                    listHtml += `<h4>${element.title}</h4>`;
-                    listHtml += `<div class='article-summary'>${element.summary}</div>`;
+                    listHtml += `<div id="article-${element._id}" class="not-selected" class="card mb-3">`// style="max-width: 540px;">`;
+                    listHtml += '<div class="row">';
+                    listHtml += '<div class="col-md-4">';
+                    listHtml += `<img src="${element.image}" class="card-img" alt="album image">`
+                    listHtml += '</div>';
+                    listHtml += '<div class="col-md-8">';
+                    listHtml += '<div class="card-body">'
+                    listHtml += `<h5 class="card-title">${element.title}</h5>`;
+                    listHtml += `<p class="card-text">${element.summary}</p>`;
+                    listHtml += `<p class="card-text">`;
                     listHtml += `<button class='btn-open-article-link' data-href='${element.link}' data-traget='article-window'>OPEN ARTICLE</button>`;
-                    listHtml += `<button class='btn-view-comments' data-article-id='${element._id}'>VIEW COMMENTS</a>`; 
-                    listHtml += `</div>`;
-                    listHtml += '</li>';
+                    listHtml += `<button class='btn-view-comments' data-article-id='${element._id}'>VIEW COMMENTS</button>`; 
+                    listHtml += `</p>`;
+                    listHtml +='</div></div></div></div>';
+
+                    // listHtml += '<li>';
+                    // listHtml += `<div id='article-${element._id}' class='not-selected'>`
+                    // listHtml += `<h4>${element.title}</h4>`;
+                    // listHtml += `<div class='article-summary'>${element.summary}</div>`;
+                    // listHtml += `<button class='btn-open-article-link' data-href='${element.link}' data-traget='article-window'>OPEN ARTICLE</button>`;
+                    // listHtml += `<button class='btn-view-comments' data-article-id='${element._id}'>VIEW COMMENTS</a>`; 
+                    // listHtml += `</div>`;
+                    // listHtml += '</li>';
                 });
-                listHtml += '</ul>';
+                listHtml += '</div>';
                 listHtml += '</div>';
                 listHtml = $(listHtml);
                 $articles.append(listHtml);

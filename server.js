@@ -32,7 +32,7 @@ app.get('/articles', (request, response) => {
   console.log('/articles');
   db.Article.find({})
     .then((dbArticle) => {
-      // If all Notes are successfully found, send them back to the client
+      // If all Articles are successfully found, send them back to the client
       response.json(dbArticle);
     })
     .catch((err) => {
@@ -103,7 +103,7 @@ app.post('/add/scrape', (request, response) => {
   // start the scraper
   const link = 'https://www.angrymetalguy.com/category/reviews/';
 
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= 1; i++) {
     // get 10 pages worth of articles
     axios.get(link + 'page/' + i + '/')
       .then(extResponse => {
@@ -129,7 +129,7 @@ app.post('/add/scrape', (request, response) => {
             .children('a')
             .attr('href');
           result.image = $(this)
-            .find('div.full_img')
+            .find('span.c_img')
             .children('img')
             .attr('src')
           result.summary = $(this)
@@ -138,7 +138,7 @@ app.post('/add/scrape', (request, response) => {
 
           numberFound++; // increase the number of articles found
           // add article to the DB
-          // console.log('result:', result.title, result.summary);
+          console.log('result:', result.title, result.image);
           db.Article.create(result)
             .then(dbArticle => {
               // article successfully added to db
@@ -147,7 +147,7 @@ app.post('/add/scrape', (request, response) => {
             })
             .catch(error => {
               console.log('error - possibly just a duplicate');
-              // console.log( error )
+              console.log( error )
               numberRejected++;  // increase the number of articles rejected
             });
         });
@@ -161,14 +161,14 @@ app.post('/add/scrape', (request, response) => {
 
 
 // Connect to the Mongo DB using mongoose
-mongoose.connect('mongodb://localhost/news-forum-populator', { useNewUrlParser: true });
+//mongoose.connect('mongodb://localhost/news-forum-populator', { useNewUrlParser: true });
 // connect to the heroku DB ??
 // mongoose.connect('mongodb://jdahle:m3tal-n3ws@ds253537.mlab.com:53537/heroku_p7b38krt')
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/news-forum";
 // Connect to the Mongo DB
 mongoose.connect(MONGODB_URI);
 
 // start the listener
 app.listen(PORT, () => {
-  console.log(`app running on port ${PORT}`);
+  console.log(`app running at ${MONGODB_URI} on port ${PORT}`);
 });

@@ -2,7 +2,11 @@
 #header-area {
     border: 1pt solid red;
     background-color: #88AA33;
-    width: 100%
+    width: 100%;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 10;
 }
 
 #footer-area {
@@ -13,14 +17,15 @@
 #articles-content {
     border: 1pt solid red;
     background-color: #dddddd;
+    z-index: -10;
 }
 
 #comments-wrapper {
     border: 1pt solid red;
     background-color: #888888;
     position: fixed;
-    left: 50px;
-    top: 50px;
+    right: 10px;
+    top: 150px;
 }
 
 .not-selected {
