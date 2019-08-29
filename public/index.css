@@ -3,10 +3,16 @@
 }
 body {
     background-color: #f6f4d2;
+    padding: 5px;
 }
 
-h1 {
+#page-title {
     font-family: 'Michroma', sans-serif;
+    font-size: 16pt;
+}
+
+.attribution {
+    font-size: 10pt;
 }
 
 .comments-title {

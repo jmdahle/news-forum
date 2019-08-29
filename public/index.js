@@ -7,14 +7,9 @@ $(document).ready( () => {
     $(document).on('click', '.btn-view-comments', viewComments );
     $(document).on('click', '#btn-close-comments', hideComments );
 
-    //Jquery References
+    //JQuery References
     let $articles = $('#articles-content');
     let $comments = $('#comments-wrapper');
-    let $footer = $('#footer-area');
-    let $header = $('#header-area');
-
-    // comments begin hidden
-    
 
     // popuate the article list 
     populateArticleList();
