@@ -41,6 +41,19 @@ app.get('/articles', (request, response) => {
     });
 });
 
+// route returns one article and all related comments
+app.get('/article/:article_id', (request, response) => {
+  console.log('./article/id');
+  db.Article.find( { _id: request.pararm.article_id} )
+    .populate('comments') // adds the related comments 
+    .then( dbArticle => {
+      response.json(dbArticle)
+    })
+    .catch( err => {
+      response.json(err);
+    });
+});
+
 // route to return all comments for the given article
 app.get('/comments/:article_id', (request, response) => {
   console.log(`/comments/${request.params.article_id}`);
@@ -115,13 +128,17 @@ app.post('/add/scrape', (request, response) => {
             .find('h4')
             .children('a')
             .attr('href');
+          result.image = $(this)
+            .find('div.full_img')
+            .children('img')
+            .attr('src')
           result.summary = $(this)
             .find('aside')
             .text();
 
           numberFound++; // increase the number of articles found
           // add article to the DB
-          console.log('result:', result.title, result.summary);
+          // console.log('result:', result.title, result.summary);
           db.Article.create(result)
             .then(dbArticle => {
               // article successfully added to db

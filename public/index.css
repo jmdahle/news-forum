@@ -1,5 +1,11 @@
 
-#message-area {
+#header-area {
+    border: 1pt solid red;
+    background-color: #88AA33;
+    width: 100%
+}
+
+#footer-area {
     border: 1pt solid red;
     background-color: #cccccc;
 }

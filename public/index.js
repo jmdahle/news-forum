@@ -1,6 +1,6 @@
 $(document).ready( () => {
     // document events
-    $(document).on('click', '#testArticle', populateArticleList );
+    $(document).on('click', '#btn-get-article', populateArticleList );
     $(document).on('click', '#btn-scrape', submitScrapeRequest );
     $(document).on('click', '#btn-submit-comment', submitComment );
     $(document).on('click', '.btn-open-article-link', openArticle );
@@ -10,10 +10,14 @@ $(document).ready( () => {
     //Jquery References
     let $articles = $('#articles-content');
     let $comments = $('#comments-wrapper');
-    let $message = $('#message-area');
+    let $footer = $('#footer-area');
+    let $header = $('#header-area');
 
     // comments begin hidden
     hideComments();
+
+    // popuate the article list 
+    populateArticleList();
 
     function showComments() {
         $comments.show();
@@ -32,7 +36,7 @@ $(document).ready( () => {
                 console.log( dbScrapeResult );
                 let $p = $('<p>');
                 $p.text(JSON.stringify(dbScrapeResult));
-                $message.append( $p );
+                $footer.append( $p );
         });
     };
     
@@ -62,8 +66,7 @@ $(document).ready( () => {
         });
     };
 
-    function populateArticleList(e) {
-        e.preventDefault();
+    function populateArticleList() {
         $
             .get('/articles', dbArticles => {
                 $articles.empty();
@@ -94,6 +97,7 @@ $(document).ready( () => {
 
     function viewComments (e) {
         let article_id = $(this).attr('data-article-id');
+        console.log('index.js:viewComments:','selected article id:', article_id);
         // updates page references to current/selected Article
         updateCurrentArticle(article_id);
         // populate the comment list
@@ -108,6 +112,7 @@ $(document).ready( () => {
     }
 
     function updateCurrentArticle(newArticleId) {
+        console.log('index.js:updateCurrentArticle','article:id - new/replacement',newArticleId);
         // update old selection
         let selectedArticleId = $('#articleList').attr('data-selected-item');
         $(`#article-${selectedArticleId}`).attr('class','not-selected');
@@ -116,6 +121,7 @@ $(document).ready( () => {
         $(`#article-${newArticleId}`).attr('class','selected');
         // update button data
         $('#btn-submit-comment').attr('data-id', newArticleId);
+        console.log('index.js:updateCurrentArticle','article:id - replaced with',newArticleId);
         
     }
 
