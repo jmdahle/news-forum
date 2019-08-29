@@ -9,6 +9,9 @@ h1 {
     font-family: 'Michroma', sans-serif;
 }
 
+.comments-title {
+    color: #9ad4d6
+}
 .article-art {
     padding-left: 10px;
     padding-top: 10px;

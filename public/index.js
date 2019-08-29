@@ -69,7 +69,7 @@ $(document).ready( () => {
                 commentor: newCommentor,
                 article_id: newArticleId
             }
-            console.log(newComment);
+            // console.log(newComment);
             $
                 .post({
                 url: '/add/Comment',
@@ -125,7 +125,6 @@ $(document).ready( () => {
 
     function viewComments (e) {
         let article_id = $(this).attr('data-article-id');
-        console.log('index.js:viewComments:','selected article id:', article_id);
         // updates page references to current/selected Article
         updateCurrentArticle(article_id);
         // populate the comment list
@@ -135,7 +134,6 @@ $(document).ready( () => {
     }
 
     function updateCurrentArticle(newArticleId) {
-        console.log('index.js:updateCurrentArticle','article:id - new/replacement',newArticleId);
         // update old selection
         let selectedArticleId = $('#articleList').attr('data-selected-item');
         $(`#article-${selectedArticleId}`).attr('class','not-selected');
@@ -144,19 +142,19 @@ $(document).ready( () => {
         $(`#article-${newArticleId}`).attr('class','selected');
         // update button data
         $('#btn-submit-comment').attr('data-id', newArticleId);
-        console.log('index.js:updateCurrentArticle','article:id - replaced with',newArticleId);
         
     }
 
     function populateCommentList(article_id) {
-        $.get(`/comments/${article_id}`, dbComments => {
+        $.get(`/article/${article_id}`, dbArticle => {
             $comments.empty();
-            let listSource = dbComments;
+            let title = dbArticle[0].title;
+            let listSource = dbArticle[0].comments;
             let listHtml = '';
             listHtml += `<div id='comments-content' class='modal-dialog' role='document'>`;
             listHtml += `<div class='modal-content'>`;
             listHtml += `<div class='modal-header'>`;
-            listHtml += `<h6 class='modal-title'>Comments</h6>`;
+            listHtml += `<h5 class='modal-title comments-title'>${title}</h5>`;
             listHtml += `<button id='btn-close-comments' type='button'> <span aria-hidden='true'>&times;</span></button>`;
             listHtml += '</div>'; //modal-header
             listHtml += `<div class='modal-body'>`;
@@ -169,7 +167,7 @@ $(document).ready( () => {
             listHtml += '</div>'; //modal-body
             listHtml += '<div class="modal-footer">'    
             listHtml += `<form id='new-comment'>`;
-            listHtml += `<h6>New Comment on Article</h6>`;
+            listHtml += `<h6 class='comments-title'>New Comment on ${title}</h6>`;
             listHtml += `<p id='form-warn' class='warning'></p>`
             listHtml += `<div class='form-group'>`;
             listHtml += `<label for='new-comment-body'>Comment:</label>`;

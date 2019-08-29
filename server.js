@@ -44,8 +44,9 @@ app.get('/articles', (request, response) => {
 
 // route returns one article and all related comments
 app.get('/article/:article_id', (request, response) => {
-  console.log(`./article/id = ${request.params.article_id}`);
-  db.Article.find( { _id: request.pararms.article_id} )
+  console.log(`/article/${request.params.article_id}`);
+  let article_id = request.params.article_id;
+  db.Article.find( { _id: article_id} )
     .populate('comments') // adds the related comments 
     .then( dbArticle => {
       response.json(dbArticle)
@@ -78,9 +79,9 @@ app.post('/add/Comment', (request, response) => {
       // If a Comment was created successfully, find one Article (there's only one) and push the new Comment's _id to the Article's `comments` array
       // { new: true } tells the query that we want it to return the updated Article -- it returns the original by default
       // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-      console.log('add comment to the article')
+      // console.log('add comment to the article')
       let relatedArticleId = dbComment.article_id;
-      console.log('relatedArticleId:', relatedArticleId);
+      // console.log('relatedArticleId:', relatedArticleId);
       return db.Article.findOneAndUpdate({ _id: relatedArticleId }, { $push: { comments: dbComment._id } }, { new: true });
     })
     .then((dbArticle) => {
@@ -143,12 +144,12 @@ app.post('/add/scrape', (request, response) => {
           db.Article.create(result)
             .then(dbArticle => {
               // article successfully added to db
-              console.log('added', dbArticle._id)
+              // console.log('added', dbArticle._id)
               numberAdded++; // increse number of articles added
             })
             .catch(error => {
               console.log('error - possibly just a duplicate');
-              console.log( error )
+              // console.log( error )
               numberRejected++;  // increase the number of articles rejected
             })
         });
