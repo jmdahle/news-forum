@@ -4,6 +4,8 @@
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Michroma|Roboto&display=swap" rel="stylesheet">
     <!-- jquery -->
     <script src='https://code.jquery.com/jquery-3.4.1.js'></script> 
     <!-- bootstrap -->
@@ -13,14 +15,15 @@
     <!-- local page css -->
     <link rel='stylesheet' type='text/css' href='/index.css'></style>
 
-    <title>Extreme Comments</title>
+    <title>Metal Music - Reviews and Comments</title>
 </head>
 <body>
     <div id='header-area' class='navbar navbar-fixed-top'>
         <span class="navbar-text">
-            <h1>Extreme Comments</h1>
+            <h1>Music Reviews and Comments</h1>
         </span>
-    </div>        
+    </div>      
+
     <div class='container'>
         <!-- header -->
         <div class='row'>
@@ -28,7 +31,6 @@
                 <!-- articles -->
                 <div id='articles-wrapper'>
                     <div id='articles-content'></div>
-                    <button id='btn-get-article'>Get Articles</button>
                 </div>    
             </div>
             <div class='col-md-2'>
@@ -37,22 +39,14 @@
     </div>
     <footer>
         <div id='footer-area'></div>
-        <button id='btn-scrape'>Search for New Aricles</button>
+        <button id='btn-scrape'>Search for New Articles</button>
     </footer>
 
     <!-- comments -->
-    <div id='comments-wrapper'>
-        <div id='comments-content'></div>
-        <form id='new-comment'>
-            <h4>New Comment on Article</h4>
-            <label for='new-comment-body'>Comment:</label>
-            <textarea id='new-comment-body'></textarea>
-            <label for='new-comment-commentor'>Posted By:</label>
-            <input type='text' id='new-comment-commentor'>
-            <button id='btn-submit-comment' type='submit'>Post Comment</button>
-        </form>
+    <div id='comments-wrapper' class='modal' tabindex='-1' role='dialog'>
+        
     </div>    
-    
+        
 
     <!-- local page js /jquery -->
     <script src='/index.js'> </script>

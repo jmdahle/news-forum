@@ -1,37 +1,64 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+body {
+    background-color: #f6f4d2;
+}
 
+h1 {
+    font-family: 'Michroma', sans-serif;
+}
+
+.article-art {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 #header-area {
-    border: 1pt solid red;
-    background-color: #88AA33;
+    background-color: #38618c;
+    color: #f6f4d2;
     width: 100%;
     position: sticky;
     position: -webkit-sticky;
     top: 0;
     z-index: 10;
+    margin-bottom: 10px;
+}
+
+.article-card {
+    margin-top: 5px;
+    padding-top: 5px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
 }
 
 #footer-area {
-    border: 1pt solid red;
-    background-color: #cccccc;
+    background-color: #d4e09b;
 }
 
 #articles-content {
-    border: 1pt solid red;
-    background-color: #dddddd;
     z-index: -10;
 }
 
-#comments-wrapper {
-    border: 1pt solid red;
-    background-color: #888888;
-    position: fixed;
-    right: 10px;
-    top: 150px;
+#new-comment {
+    width: 100%;
+}
+
+.modal-header, .modal-content, .model-footer {
+    background-color: #38618c;
+    color: #f6f4d2;
 }
 
 .not-selected {
-    background-color: #dddddd;
+    background-color: #38618c;
+    color: #9ad4d6;
 }
 
 .selected {
-    background-color: lemonchiffon;
+    background-color: #f6f4d2;
+    color: #38618c;
+}
+
+.warning {
+    color: #ffc6d9;
 }

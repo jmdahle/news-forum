@@ -31,6 +31,7 @@ app.get('/', (request, response) => {
 app.get('/articles', (request, response) => {
   console.log('/articles');
   db.Article.find({})
+    .populate('comments') // adds the related comments 
     .then((dbArticle) => {
       // If all Articles are successfully found, send them back to the client
       response.json(dbArticle);
@@ -43,8 +44,8 @@ app.get('/articles', (request, response) => {
 
 // route returns one article and all related comments
 app.get('/article/:article_id', (request, response) => {
-  console.log('./article/id');
-  db.Article.find( { _id: request.pararm.article_id} )
+  console.log(`./article/id = ${request.params.article_id}`);
+  db.Article.find( { _id: request.pararms.article_id} )
     .populate('comments') // adds the related comments 
     .then( dbArticle => {
       response.json(dbArticle)
@@ -103,8 +104,8 @@ app.post('/add/scrape', (request, response) => {
   // start the scraper
   const link = 'https://www.angrymetalguy.com/category/reviews/';
 
-  for (let i = 1; i <= 1; i++) {
-    // get 10 pages worth of articles
+  for (let i = 1; i <= 2; i++) {
+    // get 2 pages worth of articles
     axios.get(link + 'page/' + i + '/')
       .then(extResponse => {
         const $ = cheerio.load(extResponse.data);
@@ -138,7 +139,7 @@ app.post('/add/scrape', (request, response) => {
 
           numberFound++; // increase the number of articles found
           // add article to the DB
-          console.log('result:', result.title, result.image);
+          // console.log('result:', result.title, result.image);
           db.Article.create(result)
             .then(dbArticle => {
               // article successfully added to db
@@ -149,14 +150,14 @@ app.post('/add/scrape', (request, response) => {
               console.log('error - possibly just a duplicate');
               console.log( error )
               numberRejected++;  // increase the number of articles rejected
-            });
+            })
         });
       })
       .catch(err => {
         console.log(err);
       });
   }
-  response.send('Scrape complete');
+  response.send('scrape initiated');
 })
 
 

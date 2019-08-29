@@ -5,9 +5,10 @@ The news-forum app scrapes a website for news articles and provides a strcuture 
 
 ## Installation
 
-### Bootstrap
-    * buttons
-    * grid
+### Technologies Used
+** Client Side **
+* HTML, CSS, JavaScript, JQuery, Bootstrap
+* Node.js, NPM Packages listed below
     
 ### Node Module Dependencies
 1. Run `npm init` to install the dependencies listed in `json.package`. When that's finished, you will have installed these npm packages:

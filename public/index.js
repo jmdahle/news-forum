@@ -5,7 +5,7 @@ $(document).ready( () => {
     $(document).on('click', '#btn-submit-comment', submitComment );
     $(document).on('click', '.btn-open-article-link', openArticle );
     $(document).on('click', '.btn-view-comments', viewComments );
-    $(document).on('click', '#btn-close-comments', closeComments );
+    $(document).on('click', '#btn-close-comments', hideComments );
 
     //Jquery References
     let $articles = $('#articles-content');
@@ -14,17 +14,27 @@ $(document).ready( () => {
     let $header = $('#header-area');
 
     // comments begin hidden
-    hideComments();
+    
 
     // popuate the article list 
     populateArticleList();
 
-    function showComments() {
-        $comments.show();
+    function showWarning(warntext) {
+        $('#form-warn').text(warntext);
     }
 
-    function hideComments() {
-        $comments.hide();
+    function clearWarning() {
+        $('#form-warn').text('');
+    }
+
+    function showComments() {
+        $comments.modal('show');
+    }
+
+    function hideComments(e) {
+        e.preventDefault
+        $comments.modal('hide');
+        clearWarning();
     }
     function submitScrapeRequest (e) {
         e.preventDefault();
@@ -33,10 +43,11 @@ $(document).ready( () => {
             url:'/add/scrape'
         })
             .then( (dbScrapeResult) => {
-                console.log( dbScrapeResult );
-                let $p = $('<p>');
-                $p.text(JSON.stringify(dbScrapeResult));
-                $footer.append( $p );
+                // console.log( dbScrapeResult );
+                // let $p = $('<p>');
+                // $p.text(JSON.stringify(dbScrapeResult));
+                // $footer.append( $p );
+                populateArticleList();
         });
     };
     
@@ -48,22 +59,30 @@ $(document).ready( () => {
         let newBody = $('#new-comment-body').val().trim();
         let newCommentor = $('#new-comment-commentor').val().trim();
         let newArticleId = $(this).attr('data-id');
-        let newComment = {
-            body: newBody,
-            commentor: newCommentor,
-            article_id: newArticleId
+        if (newBody.length < 1 || newCommentor.length < 1) {
+            showWarning('Must enter a comment and your name');
+        } 
+        else {
+            clearWarning();
+            let newComment = {
+                body: newBody,
+                commentor: newCommentor,
+                article_id: newArticleId
+            }
+            console.log(newComment);
+            $
+                .post({
+                url: '/add/Comment',
+                data: newComment
+            })
+                .then( (dbComment) => {
+                    // let $p = $('<p>');
+                    // $p.text( JSON.stringify(dbComment));
+                    // $comments.append( $p );
+                    populateArticleList()
+                    $comments.modal('hide');
+            });
         }
-        console.log(newComment);
-        $
-            .post({
-            url: '/add/Comment',
-            data: newComment
-        })
-            .then( (dbComment) => {
-                let $p = $('<p>');
-                $p.text( JSON.stringify(dbComment));
-                $comments.append( $p );
-        });
     };
 
     function populateArticleList() {
@@ -75,29 +94,21 @@ $(document).ready( () => {
                 listHtml += '<div>';
                 listHtml += `<div id='articleList' data-selected-item=''>`;
                 listSource.forEach(element => {
-                    listHtml += `<div id="article-${element._id}" class="not-selected" class="card mb-3">`// style="max-width: 540px;">`;
+                    let numComments = element.comments.length;
+                    listHtml += `<div id="article-${element._id}" class="not-selected card mb-3">`// style="max-width: 540px;">`;
                     listHtml += '<div class="row">';
                     listHtml += '<div class="col-md-4">';
-                    listHtml += `<img src="${element.image}" class="card-img" alt="album image">`
+                    listHtml += `<img src="${element.image}" class="card-img article-art" alt="album image">`
                     listHtml += '</div>';
                     listHtml += '<div class="col-md-8">';
                     listHtml += '<div class="card-body">'
                     listHtml += `<h5 class="card-title">${element.title}</h5>`;
                     listHtml += `<p class="card-text">${element.summary}</p>`;
                     listHtml += `<p class="card-text">`;
-                    listHtml += `<button class='btn-open-article-link' data-href='${element.link}' data-traget='article-window'>OPEN ARTICLE</button>`;
-                    listHtml += `<button class='btn-view-comments' data-article-id='${element._id}'>VIEW COMMENTS</button>`; 
+                    listHtml += `<button class='btn-open-article-link' data-href='${element.link}'>OPEN ARTICLE</button>`;
+                    listHtml += `<button class='btn-view-comments' data-article-id='${element._id}'>VIEW COMMENTS <span class="badge badge-dark">${numComments}</span></button>`; 
                     listHtml += `</p>`;
                     listHtml +='</div></div></div></div>';
-
-                    // listHtml += '<li>';
-                    // listHtml += `<div id='article-${element._id}' class='not-selected'>`
-                    // listHtml += `<h4>${element.title}</h4>`;
-                    // listHtml += `<div class='article-summary'>${element.summary}</div>`;
-                    // listHtml += `<button class='btn-open-article-link' data-href='${element.link}' data-traget='article-window'>OPEN ARTICLE</button>`;
-                    // listHtml += `<button class='btn-view-comments' data-article-id='${element._id}'>VIEW COMMENTS</a>`; 
-                    // listHtml += `</div>`;
-                    // listHtml += '</li>';
                 });
                 listHtml += '</div>';
                 listHtml += '</div>';
@@ -107,7 +118,9 @@ $(document).ready( () => {
     }
 
     function openArticle(e) {
-        alert ('Open article in new window');
+        let externalLink = $(this).attr('data-href');
+        let targetWindow = 'article';
+        window.open( externalLink, targetWindow);
     }
 
     function viewComments (e) {
@@ -119,11 +132,6 @@ $(document).ready( () => {
         populateCommentList(article_id);
         // show the comments
         showComments();
-    }
-
-    function closeComments (e) {
-        e.preventDefault();
-        hideComments();
     }
 
     function updateCurrentArticle(newArticleId) {
@@ -145,29 +153,37 @@ $(document).ready( () => {
             $comments.empty();
             let listSource = dbComments;
             let listHtml = '';
-            listHtml += '<div>';
-            listHtml += `<button id='btn-close-comments' type='button' class='close' aria-label='Close'> <span aria-hidden='true'>&times;</span></button>`;
-            listHtml += '<h4>Comments</h4>';
-            listHtml += '<ul>';
+            listHtml += `<div id='comments-content' class='modal-dialog' role='document'>`;
+            listHtml += `<div class='modal-content'>`;
+            listHtml += `<div class='modal-header'>`;
+            listHtml += `<h6 class='modal-title'>Comments</h6>`;
+            listHtml += `<button id='btn-close-comments' type='button'> <span aria-hidden='true'>&times;</span></button>`;
+            listHtml += '</div>'; //modal-header
+            listHtml += `<div class='modal-body'>`;
             listSource.forEach(element => {
-                listHtml += '<li>';
-                listHtml += `<div data-id='${element. _id}'>`;
-                listHtml += `<p>${element.body}</p>`;
-                listHtml += `<p>- posted by ${element.commentor}</p>`
-                listHtml += `</div>`;
-                listHtml += '</li>';
+                listHtml += `<p data-id='${element. _id}'>`;
+                listHtml += `${element.body}`;
+                listHtml += ` (posted by ${element.commentor})`
+                listHtml += `</p>`;
             });
-            listHtml += '</ul>';
-            listHtml += '</div>';
+            listHtml += '</div>'; //modal-body
+            listHtml += '<div class="modal-footer">'    
             listHtml += `<form id='new-comment'>`;
-            listHtml += `<h4>New Comment on Article</h4>`;
+            listHtml += `<h6>New Comment on Article</h6>`;
+            listHtml += `<p id='form-warn' class='warning'></p>`
+            listHtml += `<div class='form-group'>`;
             listHtml += `<label for='new-comment-body'>Comment:</label>`;
-            listHtml += `<textarea id='new-comment-body'></textarea>`;
+            listHtml += `<textarea id='new-comment-body' class='form-control'></textarea>`;
+            listHtml += '</div>';
+            listHtml += `<div class='form-group'>`;
             listHtml += `<label for='new-comment-commentor'>Posted By:</label>`;
-            listHtml += `<input type='text' id='new-comment-commentor'>`;
-            listHtml += `<button id='btn-submit-comment' type='submit' ;data-id=''>Post Comment</button>`;
+            listHtml += `<input type='text' id='new-comment-commentor' class='form-control'>`;
+            listHtml += '</div>';
+            listHtml += `<button id='btn-submit-comment' type='submit' data-id='${article_id}'>Post Comment</button>`;
             listHtml += `</form>`;
-
+            listHtml += '</div>'; //modal-footer
+            listHtml += `</div>`; //modal-content
+            listHtml += `</div>`; //modal-dialog
             listHtml = $(listHtml);
             $comments.append(listHtml);
             });
